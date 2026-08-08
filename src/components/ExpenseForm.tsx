@@ -1,28 +1,65 @@
+import { useState, type ChangeEvent } from "react";
+import type { DraftExpense, Value } from "../types";
 import { categories } from "../data/categories";
+import DatePicker from 'react-date-picker';
+import 'react-calendar/dist/Calendar.css'
+import 'react-date-picker/dist/DatePicker.css'
+
+
 
 export default function ExpenseForm() {
+
+    const [expense, setExpense] = useState<DraftExpense>({
+        amount: 0,
+        expenseName: '',
+        category: '',
+        date: new Date()
+    })
+
+    const handleChangeDate = (value : Value) => {
+        setExpense({
+            ...expense,
+            date: value
+        })
+    }
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+        const {name, value} = e.target
+        const isAmountField = ['amount'].includes(name)
+
+        setExpense({
+            ...expense,
+            //Convert to a number with the "+" or we can use Number(value)
+            [name] : isAmountField ? Number(value) : value
+        })
+    }
+
   return (
-    <form action="" className="space-y-5">
-        <legend className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2">
-            New Expense
-        </legend>
+    <form className="space-y-5">
+        <legend 
+            className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2"
+            >
+                New Expense
+            </legend>
 
         <div className="flex flex-col gap-2">
             <label htmlFor="expenseName" className="text-xl">
-                Expense Name
+                Expense Name:
             </label>
             <input 
                 type="text" 
                 id="expenseName"
                 placeholder="Add The Expense Name"
                 className="bg-slate-100 p-2"
-                name="expeseName"
+                name="expenseName"
+                onChange={handleChange}
+
             />
         </div>
 
         <div className="flex flex-col gap-2">
             <label htmlFor="amount" className="text-xl">
-                Amount
+                Amount:
             </label>
             <input 
                 type="number" 
@@ -30,17 +67,19 @@ export default function ExpenseForm() {
                 placeholder="Add The Expense Amount: ej. 300"
                 className="bg-slate-100 p-2"
                 name="amount"
+                onChange={handleChange}
             />
         </div>
 
         <div className="flex flex-col gap-2">
             <label htmlFor="category" className="text-xl">
-                Category
+                Category: 
             </label>
             <select
                 id="category"
                 className="bg-slate-100 p-2"
                 name="category"
+                onChange={handleChange}
             >
                 <option value="">-- Select --</option>
                 {categories.map(category => (
@@ -50,6 +89,18 @@ export default function ExpenseForm() {
                     >{category.name}</option>
                 ))}
             </select>
+        </div>
+
+        <div className="flex flex-col gap-2">
+            <label htmlFor="amount" className="text-xl">
+                Expense Date: 
+            </label>
+            {/* Since it is a dependency we download, it accepts props */}
+            <DatePicker
+                className="bg-slate-100 p-2 border-0"
+                value={expense.date}
+                onChange={handleChangeDate}
+            />
         </div>
 
         <input 
