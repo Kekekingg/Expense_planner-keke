@@ -18,7 +18,7 @@ function App() {
         </h1>
       </header>
 
-      <div className="max-w-3xl max-auto lg:w-4/5 lg:justify-self-center bg-white shadow-lg rounded-lg mt-10 p-10">
+      <div className="max-w-3xl mx-auto lg:w-4/5 lg:justify-self-center bg-white shadow-lg rounded-lg mt-10 p-10">
         {isValidBudget ? <BudgetTracker /> : <BudgetForm />}
       </div>
 
