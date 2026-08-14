@@ -6,7 +6,7 @@ import 'react-calendar/dist/Calendar.css'
 import 'react-date-picker/dist/DatePicker.css'
 import ErrorMessage from "./ErrorMessage";
 import { useBudget } from "../hooks/useBudget";
-
+import { useEffect } from "react";
 
 
 export default function ExpenseForm() {
@@ -26,7 +26,15 @@ export default function ExpenseForm() {
     }
 
     const [error, setError] = useState('');
-    const {dispatch} = useBudget();
+    const {dispatch, state} = useBudget();
+
+    useEffect(() => {
+        if(state.editingId) {
+            const editingExpenses = state.expenses.filter( currentExpense => currentExpense.id === state.editingId)[0]
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setExpense(editingExpenses)
+        }
+    }, [state.editingId, state.expenses])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const {name, value} = e.target
