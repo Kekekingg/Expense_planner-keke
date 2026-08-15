@@ -26,13 +26,16 @@ export default function ExpenseForm() {
     }
 
     const [error, setError] = useState('');
-    const {dispatch, state} = useBudget();
+    const [previousAmount, setPreviousAmount] = useState(0)
+    const {dispatch, state, availableBudget} = useBudget();
 
+    //
     useEffect(() => {
         if(state.editingId) {
             const editingExpenses = state.expenses.filter( currentExpense => currentExpense.id === state.editingId)[0]
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setExpense(editingExpenses)
+            setPreviousAmount(editingExpenses.amount)
         }
     }, [state.editingId, state.expenses])
 
@@ -56,11 +59,19 @@ export default function ExpenseForm() {
             return
         }
 
-        //Add a new expense
-        dispatch({
-            type: 'add-expense',
-            payload: {expense}
-        })
+        //Validate that the limit is not exceeded
+        if( (expense.amount - previousAmount) > availableBudget) {
+            setError('That expense exceeds the budget');
+            return
+        }
+
+        //Add a new expense or edit an existing one
+        //This editingId serves solely to identify the action we want to invoke
+        if(state.editingId) {
+            dispatch({type: 'update-expense', payload: {expense: { id: state.editingId, ...expense }} })
+        } else {
+            dispatch({type: 'add-expense', payload: { expense }})
+        }
 
         //Reset the form
         setExpense({
@@ -69,6 +80,7 @@ export default function ExpenseForm() {
             category: '',
             date: new Date()
         })
+        setPreviousAmount(0)
 
     }
 
@@ -77,7 +89,7 @@ export default function ExpenseForm() {
         <legend 
             className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2"
             >
-                New Expense
+                {state.editingId ? 'Save Changes' : 'New Expense'}
             </legend>
             {error && <ErrorMessage>{error}</ErrorMessage>}
 
@@ -148,7 +160,7 @@ export default function ExpenseForm() {
         <input 
             type="submit" 
             className="bg-blue-600 cursor-pointer w-full p-2 text-white uppercase font-bold rounded-l-lg"
-            value={'Record Expense'}
+            value={state.editingId ? 'Save Changes' : 'New Expense'}
         />
     </form>
   )
