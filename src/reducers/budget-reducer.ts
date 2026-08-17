@@ -1,5 +1,5 @@
 import {v4 as uuidv4} from 'uuid'
-import type { DraftExpense, Expense } from "../types"
+import type { Category, DraftExpense, Expense } from "../types"
 
 //Draft when is something new
 //Expense when is something that already exists
@@ -10,13 +10,16 @@ export type BudgetActions =
     { type: 'add-expense', payload: {expense: DraftExpense}} | 
     { type: 'delete-expense', payload: {id: Expense['id']} } | 
     { type: 'get-expense-by-id', payload: {id: Expense['id']}} | 
-    { type: 'update-expense', payload: {expense: Expense} } 
+    { type: 'update-expense', payload: {expense: Expense} } |
+    { type: 'reset-app' } | 
+    { type: 'add-filter-category', payload: {id: Category['id']} }
 
 export type BudgetState = {
     budget: number
     modal: boolean
     expenses: Expense[]
     editingId: Expense['id']
+    currentCategory: Category['id']
 }
 
 const initialBudget = () : number => {
@@ -33,7 +36,8 @@ export const initialState : BudgetState = {
     budget: initialBudget(),
     modal:false,
     expenses: localStorageExpenses(),
-    editingId: ''
+    editingId: '',
+    currentCategory: ''
 }
 
 //Generate a new expense with a unique id when it pass the validation in the form
@@ -100,6 +104,19 @@ export const budgetReducer = (
                 ), 
                 modal: false,
                 editingId: '' //For cleaning the modal
+            }
+        }
+        case 'reset-app' : {
+            return {
+                ...state,
+                budget: 0,
+                expenses: []
+            }
+        }
+        case 'add-filter-category' : {
+            return {
+                ...state,
+                currentCategory: action.payload.id
             }
         }
     }   
