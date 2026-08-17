@@ -14,13 +14,13 @@ A modern personal budget and expense-tracking app built with **React 19**, **Typ
 
 The app starts by asking for a starting budget before any tracking begins.
 
-(<img width="2546" height="502" alt="image" src="https://github.com/user-attachments/assets/056823c8-57ad-4d80-9492-61c86783c4b4" />)
+<img width="2546" height="502" alt="image" src="https://github.com/user-attachments/assets/056823c8-57ad-4d80-9492-61c86783c4b4" />
 
 ### Track and manage expenses
 
 Once a budget is set, the dashboard shows spending progress, lets you filter expenses by category, and lists every recorded expense with its category, date, and amount.
 
-(<img width="2542" height="1296" alt="image" src="https://github.com/user-attachments/assets/6fa3b812-56ce-4a4c-a283-4d5a20338b0d" />)
+<img width="2542" height="1296" alt="image" src="https://github.com/user-attachments/assets/6fa3b812-56ce-4a4c-a283-4d5a20338b0d" />
 
 ---
 
