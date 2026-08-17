@@ -1,3 +1,4 @@
+
 [README.md](https://github.com/user-attachments/files/31158078/README.md)
 # Expense Planner
 
@@ -13,13 +14,13 @@ A modern personal budget and expense-tracking app built with **React 19**, **Typ
 
 The app starts by asking for a starting budget before any tracking begins.
 
-![Define Budget screen](screenshots/define-budget.png)
+![Define Budget screen](<img width="2546" height="502" alt="define-budget" src="https://github.com/user-attachments/assets/12d8ab62-2240-42f0-8a42-0314c5333473" />)
 
 ### Track and manage expenses
 
 Once a budget is set, the dashboard shows spending progress, lets you filter expenses by category, and lists every recorded expense with its category, date, and amount.
 
-![Expense dashboard](screenshots/dashboard.png)
+![Expense dashboard](<img width="2542" height="1296" alt="dashboard" src="https://github.com/user-attachments/assets/44d78d0d-898d-4116-9beb-6ab8776e4b46" />)
 
 ---
 
